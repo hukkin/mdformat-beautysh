@@ -9,7 +9,7 @@ mdformat-beautysh is an [mdformat](https://github.com/executablebooks/mdformat) 
 that makes mdformat format Bash scripts with [Beautysh](https://github.com/lovesegfault/beautysh).
 ## Usage
 Install with:
-```console
+```bash
 pip install mdformat-beautysh
 ```
 
