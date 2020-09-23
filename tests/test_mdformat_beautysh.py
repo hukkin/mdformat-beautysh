@@ -18,18 +18,18 @@ local mytest=4
 
 
 def test_mdformat_integration():
-    unformatted_md = """```sh
+    unformatted_md = """~~~sh
 function func1()
 {
 \techo "test"
   }
-```
+~~~
 """
-    formatted_md = """~~~sh
+    formatted_md = """```sh
 function func1()
 {
     echo "test"
 }
-~~~
+```
 """
     assert mdformat.text(unformatted_md, codeformatters={"sh"}) == formatted_md
