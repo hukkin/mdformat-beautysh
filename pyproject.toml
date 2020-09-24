@@ -30,7 +30,7 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.6"
-mdformat = ">=0.2.0"
+mdformat = ">=0.3.0"
 beautysh = ">=6.0.0"
 
 [tool.poetry.dev-dependencies]

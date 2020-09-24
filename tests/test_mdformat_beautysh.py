@@ -14,7 +14,7 @@ local mytest=4
     local mytest=4
 }
 """
-    assert mdformat_beautysh.format_bash(unformatted) == formatted
+    assert mdformat_beautysh.format_bash(unformatted, "") == formatted
 
 
 def test_mdformat_integration():
