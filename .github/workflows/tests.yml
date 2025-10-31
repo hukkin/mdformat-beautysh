@@ -30,6 +30,7 @@ jobs:
     - name: Linters
       if: matrix.os == 'ubuntu-latest' && matrix.python-version == '3.14'
       run: |
+        pip install pre-commit
         pre-commit run -a
 
     - name: Test with pytest
