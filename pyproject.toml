@@ -29,18 +29,14 @@ packages = [
 "sh" = "mdformat_beautysh:format_bash"
 
 [tool.poetry.dependencies]
-python = "^3.6"
+python = ">=3.10"
 mdformat = ">=0.3.0"
-beautysh = ">=6.0.0"
+beautysh = ">=6.0.0,<6.3.0"
+setuptools = "<81"  # beautysh <6.3.0 uses pkg_resources from setuptools <81
 
-[tool.poetry.dev-dependencies]
-# Tests
+[tool.poetry.group.dev.dependencies]
 pytest = "*"
 pytest-randomly = "*"
-
-# Tools
-pre-commit = "*"
-bump2version = "*"
 
 
 [tool.isort]
