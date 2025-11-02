@@ -8,13 +8,14 @@ on:
   workflow_dispatch:
 
 jobs:
+  # Job 1: Run Linters (runs once)
   lint:
     name: Linter
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up Python 3.14 and Poetry
+      - name: Set up Python 3.14 and Poetry cache
         uses: actions/setup-python@v6
         with:
           python-version: "3.14"
@@ -28,12 +29,13 @@ jobs:
 
       - name: Install dependencies and run Linters
         run: |
-          # 'pip install poetry' is no longer needed
+          pip install "poetry==2.2.1"
           poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
           pip install pre-commit
           pre-commit run -a
         shell: bash
 
+  # Job 2: Run Pytest (runs 7 times, needs 'lint' to pass)
   build:
     name: Pytest (${{ matrix.python-version }}, ${{ matrix.os }})
     needs: lint
@@ -41,8 +43,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        # Run all Python versions on Ubuntu
         python-version: ["3.10", "3.11", "3.12", "3.13", "3.14"]
         os: [ubuntu-latest]
+        # Add jobs for the latest Python on other OSes
         include:
           - python-version: "3.14"
             os: macos-latest
@@ -52,7 +56,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up Python ${{ matrix.python-version }} and Poetry
+      - name: Set up Python ${{ matrix.python-version }} and Poetry cache
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
@@ -60,6 +64,7 @@ jobs:
 
       - name: Installation (deps and package)
         run: |
+          pip install "poetry==2.2.1"
           poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
         shell: bash
 
