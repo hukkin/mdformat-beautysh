@@ -7,6 +7,12 @@ on:
     branches: [master]
   workflow_dispatch:
 
+# Use env vars for versions, as shown in your example
+env:
+  PYTHON_VERSION: "3.14" # Used for linting
+  POETRY_VERSION: "2.2.1"
+  POETRY_URL: https://install.python-poetry.org
+
 jobs:
   # Job 1: Run Linters (runs once)
   lint:
@@ -15,11 +21,11 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up Python 3.14 and Poetry cache
+      - name: Set up Python ${{ env.PYTHON_VERSION }}
+        id: setup_python # Give this step an ID
         uses: actions/setup-python@v6
         with:
-          python-version: "3.14"
-          cache: "poetry"
+          python-version: ${{ env.PYTHON_VERSION }}
 
       - name: Cache pre-commit
         uses: actions/cache@v4
@@ -27,9 +33,21 @@ jobs:
           path: ~/.cache/pre-commit
           key: pre-commit-${{ hashFiles('.pre-commit-config.yaml') }}
 
+      # Cache Poetry's main cache
+      - name: Cache Poetry cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry
+          key: poetry-cache-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.POETRY_VERSION }}
+
+      - name: Install Poetry
+        run: |
+          curl -sSL ${{ env.POETRY_URL }} | python - --version ${{ env.POETRY_VERSION }}
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
+        shell: bash
+
       - name: Install dependencies and run Linters
         run: |
-          pip install "poetry==2.2.1"
           poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
           pip install pre-commit
           pre-commit run -a
@@ -56,15 +74,32 @@ jobs:
     steps:
       - uses: actions/checkout@v5
 
-      - name: Set up Python ${{ matrix.python-version }} and Poetry cache
+      - name: Set up Python ${{ matrix.python-version }}
+        id: setup_python # Give this step an ID
         uses: actions/setup-python@v6
         with:
           python-version: ${{ matrix.python-version }}
-          cache: "poetry"
+
+      # Cache Poetry's main cache
+      - name: Cache Poetry cache
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/pypoetry
+          key: poetry-cache-${{ runner.os }}-${{ steps.setup_python.outputs.python-version }}-${{ env.POETRY_VERSION }}
+
+      - name: Install Poetry
+        run: |
+          curl -sSL ${{ env.POETRY_URL }} | python - --version ${{ env.POETRY_VERSION }}
+          # Add Poetry to PATH (cross-platform)
+          if [ "$RUNNER_OS" == "Windows" ]; then
+            echo "$APPDATA\Python\Scripts" >> $GITHUB_PATH
+          else
+            echo "$HOME/.local/bin" >> $GITHUB_PATH
+          fi
+        shell: bash
 
       - name: Installation (deps and package)
         run: |
-          pip install "poetry==2.2.1"
           poetry config virtualenvs.create false && poetry install --no-interaction --no-ansi
         shell: bash
 
