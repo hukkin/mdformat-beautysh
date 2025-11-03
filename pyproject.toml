@@ -6,9 +6,9 @@ build-backend = "poetry.core.masonry.api"
 [tool.poetry]
 name = "mdformat-beautysh"
 version = "0.1.1"  # DO NOT EDIT THIS LINE MANUALLY. LET bump2version UTILITY DO IT
-authors = ["Taneli Hukkinen <hukkinj1@users.noreply.github.com>"]
+authors = ["Taneli Hukkinen <hukkin@users.noreply.github.com>"]
 description = "Mdformat plugin to beautify Bash scripts"
-repository = "https://github.com/hukkinj1/mdformat-beautysh"
+repository = "https://github.com/hukkin/mdformat-beautysh"
 readme = "README.md"
 license = "MIT"
 classifiers = [
@@ -22,7 +22,7 @@ packages = [
 ]
 
 #[tool.poetry.urls]
-#"Changelog" = "https://github.com/hukkinj1/mdformat-beautysh/blob/master/CHANGELOG.md"
+#"Changelog" = "https://github.com/hukkin/mdformat-beautysh/blob/master/CHANGELOG.md"
 
 [tool.poetry.plugins."mdformat.codeformatter"]
 "bash" = "mdformat_beautysh:format_bash"

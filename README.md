@@ -1,5 +1,5 @@
-[![Build Status](https://github.com/hukkinj1/mdformat-beautysh/workflows/Tests/badge.svg?branch=master)](<https://github.com/hukkinj1/mdformat-beautysh/actions?query=workflow%3ATests+branch%3Amaster+event%3Apush>)
-[![PyPI version](https://badge.fury.io/py/mdformat-beautysh.svg)](<https://badge.fury.io/py/mdformat-beautysh>)
+[![Build Status](https://github.com/hukkin/mdformat-beautysh/actions/workflows/tests.yml/badge.svg?branch=master)](<https://github.com/hukkin/mdformat-beautysh/actions?query=workflow%3ATests+branch%3Amaster+event%3Apush>)
+[![PyPI version](https://badge.fury.io/py/mdformat-beautysh.svg)](<https://pypi.org/project/mdformat-beautysh>)
 
 # mdformat-beautysh
 
@@ -9,6 +9,7 @@
 
 mdformat-beautysh is an [mdformat](<https://github.com/executablebooks/mdformat>) plugin
 that makes mdformat format Bash scripts with [Beautysh](<https://github.com/lovesegfault/beautysh>).
+Fenced code blocks labeled as either `sh` or `bash` are formatted.
 
 ## Usage
 
